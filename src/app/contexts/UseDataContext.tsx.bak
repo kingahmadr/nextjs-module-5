@@ -1,0 +1,59 @@
+import React, { createContext, useState, useContext, ReactNode } from "react";
+import useFecthData from "../hooks/useFecthData";
+
+interface ArrayString {
+  [key: string]: string | string[];
+}
+
+interface DataContextType {
+  isAuthenticated?: boolean;
+  //   dataProducts: ArrayString[];
+  //   handlePagination: () => void;
+}
+
+const DataContext = createContext<DataContextType | undefined>(undefined);
+export const DataProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
+  //   const { dataProducts, getAllProducts } = useFecthData();
+  //   useEffect(() => {
+  //     getAllProducts();
+  //     // setPagination({
+  //     //   ...pagination,
+  //     //   count: dataProducts.length,
+  //     // });
+  //     handlePagination();
+  //   }, []);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return !!localStorage.getItem("accessToken");
+  });
+  //   const pageSize = 3;
+  //   const [pagination, setPagination] = useState({
+  //     count: 1,
+  //     from: 0,
+  //     to: pageSize,
+  //   });
+  //   const handlePagination = () => {
+  //     setPagination({ ...pagination, count: dataProducts.length });
+  //   };
+  const [checked, setChecked] = useState<boolean>(false);
+  // const { userLoginData } = useFetchData();
+
+  return (
+    <DataContext.Provider
+      value={{
+        isAuthenticated,
+      }}
+    >
+      {children}
+    </DataContext.Provider>
+  );
+};
+
+export const useDataContext = () => {
+  const context = useContext(DataContext);
+  if (context === undefined) {
+    throw new Error("useAuthContext must be used within an AuthProvider");
+  }
+  return context;
+};

@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* :root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+} */
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .login-page,
+  .register-page {
+    min-height: 100vh;
+
+    background: linear-gradient(
+        to top left,
+        rgba(122, 139, 207, 0.8) 0%,
+        rgba(46, 50, 90, 0.8) 100%
+      ),
+      url(assets/images/stars.gif);
+  }
+}

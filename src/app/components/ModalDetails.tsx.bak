@@ -1,0 +1,76 @@
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import { useDataContext } from "../hooks/useFecthData";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import CardActions from "@mui/material/CardActions";
+import IconButton from "@mui/material/IconButton";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { useEffect } from "react";
+const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
+interface ModalProps {
+  id: number;
+  onClose: () => void;
+  open: boolean;
+}
+
+const { singleDataProduct, getSingleProducts } = UseDataContext();
+const ModalDetails = ({ id, open, onClose }: ModalProps) => {
+  useEffect(() => {
+    getSingleProducts(id);
+  }, []);
+
+  if (singleDataProduct !== null && singleDataProduct !== undefined) {
+    const renderSingleProducts = singleDataProduct.map((products, index) => {
+      <Card sx={{ maxWidth: 345 }} key={index}>
+        <CardHeader title={products.title} subheader={products.description} />
+        <CardMedia
+          component="img"
+          height="194"
+          image={products.images[0]}
+          alt="Gaonok gambar e slurr"
+        />
+
+        <CardContent>
+          <Typography
+            variant="body2"
+            sx={{ color: "text.secondary", fontSize: 20, m: 1 }}
+          >
+            {`Price: $${products.price},00`}
+          </Typography>
+        </CardContent>
+      </Card>;
+    });
+  }
+  return (
+    <div>
+      {/* <Button onClick={handleOpen}>Open modal</Button> */}
+      <Modal
+        keepMounted
+        open={open}
+        onClose={onClose}
+        aria-labelledby="keep-mounted-modal-title"
+        aria-describedby="keep-mounted-modal-description"
+      >
+        <Box sx={style}>{renderSingleProducts}</Box>
+      </Modal>
+    </div>
+  );
+};
+
+export default ModalDetails;
